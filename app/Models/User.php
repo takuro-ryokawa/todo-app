@@ -45,4 +45,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function todoListIndices(){
+        return $this->hasMany(TodoListIndex::class);
+    }
 }
