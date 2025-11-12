@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('todo_list_indices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->constrained('users');
-            $table->string('title',20);
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('title',50);
             $table->timestamps();
         });
     }

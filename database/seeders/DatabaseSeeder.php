@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\TodoListIndex;
+use App\Models\TodoList;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,9 +20,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $User = User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => Hash::make('password123'),
         ]);
+        TodoListIndex::factory()
+            ->count(5)
+            ->for($User)
+            ->has(TodoList::factory()->count(3),'todoLists')
+            ->create();
     }
 }
