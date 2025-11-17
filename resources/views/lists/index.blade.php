@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Todoリスト一覧</title>
+        <meta charset="utf-8">
+        <title>リスト一覧</title>
     </head>
     <body>
-        <h1>Todoリスト一覧</h1>
-        <p>ここにTodoリストの一覧を表示</p>
+        <h1>リスト一覧</h1>
+        @foreach($lists as $list)
+
+        <h2>
+            <a href="{{ route('todos.index', ['index' => $list->id]) }}">
+                {{ $list->title }}
+            </a>
+        </h2>
+        <ul>
+                @foreach($list->todoLists->take(5) as $todo)
+                <li>{{ $todo->body }}</li>
+                @endforeach
+                <li>{{ $list->updated_at }}</li>
+        </ul>
+        @endforeach
     </body>
 </html>
