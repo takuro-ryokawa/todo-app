@@ -2,13 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{{ $index->title }}</title>
+        <title>{{ $list->title }}</title>
     </head>
     <body>
-        <form action="{{ route('lists.update', $index->id) }}" method="post">
+        <form action="{{ route('lists.update', $list->id) }}" method="post">
             @csrf
             @method('PATCH')
-            <input type="text" name="title" value="{{ $index->title }}">
+            <input type="text" name="title" value="{{ $list->title }}">
         </form>
         <h2>未完了</h2>
         @php
@@ -58,7 +58,7 @@
                 </form>
             @endforeach
         </ul>
-        <form action="{{ route('todos.store', ['index' => $index->id]) }}" method="post">
+        <form action="{{ route('todos.store', ['list' => $list->id]) }}" method="post">
             @csrf
             <input type="text" name="body" placeholder="+ 項目を追加" maxlength="100">
             <button type="submit">追加</button>

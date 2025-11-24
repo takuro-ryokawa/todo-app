@@ -10,16 +10,16 @@
         @foreach($lists as $list)
 
         <h2>
-            <a href="{{ route('todos.index', ['index' => $list->id]) }}">
+            <a href="{{ route('todos.index', ['list' => $list->id]) }}">
                 {{ $list->title }}
             </a>
         </h2>
         <ul>
-                @foreach($list->todoLists->take(5) as $todo)
+                @foreach($list->todos->take(5) as $todo)
                 <li>{{ $todo->body }}</li>
                 @endforeach
                 <li>{{ $list->updated_at }}</li>
-            <form action="{{ route('lists.destroy', ['index' => $list->id]) }}" method="post">
+            <form action="{{ route('lists.destroy', ['list' => $list->id]) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <button type="submit">削除</button>

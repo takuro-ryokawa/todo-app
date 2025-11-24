@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('todo_lists', function (Blueprint $table) {
+        Schema::create('todos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('todo_list_index_id')->constrained('todo_list_indices');
+            $table->foreignId('todo_list_id')->constrained('todo_lists');
             $table->string('body', 100);
             $table->integer('flag')->default(0);
             $table->timestamps();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('todo_lists');
+        Schema::dropIfExists('todos');
     }
 };

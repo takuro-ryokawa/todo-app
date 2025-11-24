@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\TodoList;
-use App\Models\TodoListIndex;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TodoList>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TodoListIndex>
  */
 class TodoListFactory extends Factory
 {
@@ -19,9 +18,8 @@ class TodoListFactory extends Factory
     public function definition(): array
     {
         return [
-            'todo_list_index_id' => TodoListIndex::factory(),
-            'body' => $this->faker->sentence(3),
-            'flag' => $this->faker->numberBetween(0, 1),
+            'user_id' => User::factory(),
+            'title' => $this->faker->words(3, true),
         ];
     }
 }

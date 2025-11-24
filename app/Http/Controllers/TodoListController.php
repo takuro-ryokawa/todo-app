@@ -3,50 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Todo;
 use App\Models\TodoList;
-use App\Models\TodoListIndex;
 use Illuminate\Support\Facades\Auth;
 
 class TodoListController extends Controller
 {
-    public function index(TodoListIndex $index)
+    public function index()
     {
-        $todos = $index->todoLists()->get();
-        return view('todos.index', compact('index', 'todos'));
+        $lists = TodoList::where('user_id', Auth::id())->get();
+        return view('lists.index', compact('lists'));
     }
-    // 新しいtodoを追加
-    public function store(TodoListIndex $index, Request $request)
+    public function store(Request $request)
     {
+        // 空のリストを一件作る（タイトルは仮）
+        $list = TodoList::create([
+            'user_id' => Auth::id(),
+            'title' => '新しいリスト'
+        ]);
+        // 新しいリストの個別Todo画面へ飛ぶ
+        return redirect()->route('todos.index', ['list' => $list->id]);
+    }
+    public function update(TodoList $list, Request $request){
         $validated = $request->validate([
-            'body' => 'required|string|max:100'
+            'title' => 'required|string|max:50'
         ]);
-        $index->todoLists()->create([
-            'body' => $validated['body'],
-            'flag' => 0
-        ]);
-        // 個別Todo画面へリダイレクト
-        return redirect()->route('todos.index', ['index' => $index->id]);
-    }
-    public function update(TodoList $todo, Request $request)
-    {
-        $validated = $request->validate([
-            'body' => 'required|string|max:255'
-        ]);
-        $todo->body = $validated['body'];
-        $todo->save();
-        return redirect()->route('todos.index',[
-            'index' => $todo->todo_list_index_id
-        ]);
-    }
-    public function toggle(TodoList $todo)
-    {
-        $todo->flag = $todo->flag ? 0 : 1;
-        $todo->save();
+        $list->title = $validated['title'];
+        $list->save();
         return back();
     }
-    public function destroy(TodoList $todo)
+    public function destroy(TodoList $list)
     {
-        $todo->delete();
-        return back();
+        $list->todos()->delete();
+        $index->delete();
+        return redirect()->route('lists.index');
     }
 }
