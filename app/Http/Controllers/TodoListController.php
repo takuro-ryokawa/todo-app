@@ -14,24 +14,39 @@ class TodoListController extends Controller
         $todos = $index->todoLists()->get();
         return view('todos.index', compact('index', 'todos'));
     }
+    // 新しいtodoを追加
     public function store(TodoListIndex $index, Request $request)
     {
-
+        $validated = $request->validate([
+            'body' => 'required|string|max:100'
+        ]);
+        $index->todoLists()->create([
+            'body' => $validated['body'],
+            'flag' => 0
+        ]);
+        // 個別Todo画面へリダイレクト
+        return redirect()->route('todos.index', ['index' => $index->id]);
     }
-    public function edit($todo)
+    public function update(TodoList $todo, Request $request)
     {
-
+        $validated = $request->validate([
+            'body' => 'required|string|max:255'
+        ]);
+        $todo->body = $validated['body'];
+        $todo->save();
+        return redirect()->route('todos.index',[
+            'index' => $todo->todo_list_index_id
+        ]);
     }
-    public function update(Request $request, $todo)
+    public function toggle(TodoList $todo)
     {
-
+        $todo->flag = $todo->flag ? 0 : 1;
+        $todo->save();
+        return back();
     }
-    public function toggle($todo)
+    public function destroy(TodoList $todo)
     {
-
-    }
-    public function destroy($todo)
-    {
-
+        $todo->delete();
+        return back();
     }
 }
