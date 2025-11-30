@@ -19,23 +19,23 @@ class TodoListController extends Controller
         // 空のリストを一件作る（タイトルは仮）
         $list = TodoList::create([
             'user_id' => Auth::id(),
-            'title' => '新しいリスト'
+            'title' => ''
         ]);
         // 新しいリストの個別Todo画面へ飛ぶ
         return redirect()->route('todos.index', ['list' => $list->id]);
     }
     public function update(TodoList $list, Request $request){
         $validated = $request->validate([
-            'title' => 'required|string|max:50'
+            'title' => 'nullable|string|max:50'
         ]);
-        $list->title = $validated['title'];
+        $list->title = $validated['title'] ?? '';
         $list->save();
         return back();
     }
     public function destroy(TodoList $list)
     {
         $list->todos()->delete();
-        $index->delete();
+        $list->delete();
         return redirect()->route('lists.index');
     }
 }
