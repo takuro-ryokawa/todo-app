@@ -13,6 +13,7 @@
 # Todo-App
 
 Laravelを使って作成したシンプルなTodo管理アプリです。
+
 「仕事」「買い物」「プライベート」などカテゴリごとにTodoリストを作成し、その中でTodoを追加・管理できます。
 
 ![todo-app](public/images/todo-app.gif)
@@ -38,22 +39,27 @@ Laravelを使って作成したシンプルなTodo管理アプリです。
 
 1.リポジトリをクローン
 
-bash git clone https://github.com/takuro-ryokawa/todo-app
+```bash
+git clone https://github.com/takuro-ryokawa/todo-app
 
 cd todo-app
-
+```
 2.パッケージインストール
+```bash
 composer install
 npm install
 npm run build
-
+```
 3.環境変数
+```bash
 cp .env.example .env
 php artisan key:generate
-
+```
 4.マイグレーション実行 & 初期データ投入
+```bash
 php artisan migrate --seed
-
+```
 5.起動
+
 URL:http://todo-app.test/
 
