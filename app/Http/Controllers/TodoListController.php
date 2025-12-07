@@ -11,7 +11,7 @@ class TodoListController extends Controller
 {
     public function index()
     {
-        $lists = TodoList::where('user_id', Auth::id())->get();
+        $lists = TodoList::where('user_id', Auth::id())->orderBy('updated_at','desc')->get();
         return view('lists.index', compact('lists'));
     }
     public function store(Request $request)

@@ -1,18 +1,18 @@
 <header class="w-full border-b">
     @vite('resources/css/app.css')
 
-    <div class="flex items-baseline justify-between">
+    <div class="flex items-baseline justify-between px-6">
 
-    <h1 class="text-center font-semibold text-3xl text-transparent bg-clip-text bg-gray-700 p-3">✨Todo-App</h1>
+    <h1 class="text-center font-semibold text-3xl text-transparent bg-clip-text bg-gray-700 p-3"><a href="{{ route('lists.index') }}">✨Todo-App</a></h1>
 
         <div class="flex justify-end">
 
             @guest
                 <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 p-3">
-                    ログイン
+                    ログイン画面
                 </a>
                 <a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-900 p-3">
-                    新規登録
+                    新規登録画面
                 </a>
             @endguest
 

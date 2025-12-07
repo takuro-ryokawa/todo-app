@@ -14,25 +14,24 @@ class TodoController extends Controller
         $todos = $list->todos()->get();
         return view('todos.index', compact('list', 'todos'));
     }
-    // 新しいtodoを追加
     public function store(TodoList $list, Request $request)
     {
         $validated = $request->validate([
-            'body' => 'required|string|max:100'
+            'body' => 'nullable|string|max:100'
         ]);
         $list->todos()->create([
-            'body' => $validated['body'],
+            'body' => $validated['body'] ?? '',
             'flag' => 0
         ]);
-        // 個別Todo画面へリダイレクト
         return redirect()->route('todos.index', ['list' => $list->id]);
     }
     public function update(Todo $todo, Request $request)
     {
         $validated = $request->validate([
-            'body' => 'required|string|max:100'
+            'body' => 'nullable|string|max:100'
         ]);
-        $todo->body = $validated['body'];
+        $todo->body = $validated['body'] ?? '';
+        $todo->timestamps = false;
         $todo->save();
         return redirect()->route('todos.index',[
             'list' => $todo->todo_list_id

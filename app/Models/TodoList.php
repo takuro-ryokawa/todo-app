@@ -13,7 +13,7 @@ class TodoList extends Model
     use HasFactory;
 
     public function todos(){
-        return $this->hasMany(Todo::class);
+        return $this->hasMany(Todo::class)->orderBy('flag','asc')->orderBy('updated_at','asc');
     }
     public function user(){
         return $this->belongsTo(User::class);
